@@ -7,17 +7,17 @@
 void write_file(int sockfd){
   int n;
   FILE *fp;
-  char *filename = "hartakarun.zip";
+  char *filename = "./hartakarun.zip";
   char buffer[SIZE];
  
-  fp = fopen(filename, "w");
+  fp = fopen(filename, "wb");
   while (1) {
     n = recv(sockfd, buffer, SIZE, 0);
     if (n <= 0){
       break;
       return;
     }
-    fprintf(fp, "%s", buffer);
+    int size_write=fwrite(buffer,sizeof(char),n,fp);
     bzero(buffer, SIZE);
   }
   return;
