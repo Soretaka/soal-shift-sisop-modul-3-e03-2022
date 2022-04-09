@@ -20,7 +20,7 @@ int addrlen = sizeof(address);
 char cmd[1024], socketIn[1024];
 char dirPath[100] = "/home/user/Server", txtPath[100], tsvPath[100];
 char usernameArr[100], passwordArr[100], fromFile[100];
-int isValid = 0, isValidPass = 0, isValidRewel = 0, isValidDir = 0;
+int isValid = 0, isValidPass = 0, isValidRe = 0, isValidDir = 0;
 pthread_t tid[100];
 int ctrClient = 0;
 char judulProblem[100], problemPath[100], answerPath[100];
@@ -57,7 +57,7 @@ void createTsv(){
     fclose(fp);
 }
 void findUser(){
-    isValid=0, isValidPass=0, isValidRewel=0;
+    isValid=0, isValidPass=0, isValidRe=0;
     FILE * fp;
     fp = fopen (txtPath, "r");
     checkEmpty=0;
@@ -86,7 +86,7 @@ void findUser(){
 	        if(passwordArr[i]>=65 && passwordArr[i]<=90){cekzz[1]=1;cekzz[3]++;}
 	        if(passwordArr[i]>=97 && passwordArr[i]<=122){cekzz[2]=1;cekzz[3]++;}
 	    }
-	    if(cekzz[0] && cekzz[1] && cekzz[2] && cekzz[3]>=6)isValidRewel = 1; // password angka lowercase uppercase
+	    if(cekzz[0] && cekzz[1] && cekzz[2] && cekzz[3]>=6)isValidRe = 1; // password angka lowercase uppercase
 	    if(isValid)break;
     }
     if(checkEmpty==0){//user pertama
@@ -96,7 +96,7 @@ void findUser(){
 	    if(passwordArr[i]>=65 && passwordArr[i]<=90){cekzz[1]=1;cekzz[3]++;}
 	    if(passwordArr[i]>=97 && passwordArr[i]<=122){cekzz[2]=1;cekzz[3]++;}
 	}
-	if(cekzz[0] && cekzz[1] && cekzz[2] && cekzz[3]>=6)isValidRewel = 1; // password angka lowercase uppercase
+	if(cekzz[0] && cekzz[1] && cekzz[2] && cekzz[3]>=6)isValidRe = 1; // password angka lowercase uppercase
     }
     fclose(fp);   
 }
@@ -270,8 +270,8 @@ void *client(void *tmp){
 	sendInput(new_socket);
     }
     else if(strcmp(cmd,"Register")==0){
-	isValid=1, isValidRewel=0;
-	while(isValid || !isValidRewel){
+	isValid=1, isValidRe=0;
+	while(isValid || !isValidRe){
 	    strcat(socketIn,"Masukkan username");
 	    changeInput(socketIn);
 	    sendInput(new_socket);
@@ -284,9 +284,9 @@ void *client(void *tmp){
 	    strcpy(passwordArr,cmd);
 	    
             findUser();
-	    if(!isValid && isValidRewel)break; // username belum ditemukan dan kriteria password sesuai
+	    if(!isValid && isValidRe)break; // username belum ditemukan dan kriteria password sesuai
 	    strcpy(socketIn,"Data tidak valid atau sudah ada, ulangi proses !\nServer: ");
-	    isValid=1, isValidRewel=0;	
+	    isValid=1, isValidRe=0;	
 	}
 	changeInput("Register berhasil");
 	sendInput(new_socket);
