@@ -124,7 +124,7 @@ int main(int argc, char * argv[]){
                     printf("%s\n",dp->d_name);
                     if(strcmp(dp->d_name,"hartakarunans")==0){
                         printf("jalan");
-                        rename(dp->d_name,"hartakarun");
+                        rename(dp->d_name,"client/hartakarun");
                     }
                 }
             }
