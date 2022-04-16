@@ -31,7 +31,7 @@ void readBufferSp(){
 `changeInput()` berfungsi mengubah isi array input yang akan digunakan untuk mengirim pesan, `readBufferSp()` mirip seperti `readBuffer()` tetapi menyimpan hasil read
 pada array cmd yang selanjutnya digunakan pada kondisional.
 
-## 1A.
+## 2A.
 ## Server-side
 ```c
     int new_socket = *(int *)tmp;
@@ -244,7 +244,7 @@ username dan password yang diinginkan. Data dianggap valid jika memenuhi kriteri
 Server akan menolak register sampai username dan password memenuhi syarat, lalu jika sudah akan meng-append string `username:password\n` pada `users.txt`.<br>
 Jika memilih login maka client akan memasukkan username dan password, lalu jika ditemukan username dan password yang sesuai pada `users.txt` maka client berhasil login.
 Selain itu, data nama user setelah berhasil login/register juga akan tersimpan pada array. Data nama ini akan digunakan pada beberapa poin berikutnya.
-## 1B.
+## 2B.
 ```c
 void createTsv(){
     strcpy(tsvPath,dirPath);
@@ -255,7 +255,7 @@ void createTsv(){
 ```
 Pada saat menjalankan server akan dibuat file berextension `.tsv` yang digunakan menyimpan judul dan author problem dipisahkan `\t`. Author problem bisa didapat dari
 array nama yang tersimpan dari 1A dan formatting `\t` akan dilakukan ketika user melakukan add problem, karena pada kondisi awal file masih kosong.
-## 1C.
+## 2C.
 ### Server-side
 ```c
 else if(strcmp(cmd,"add")==0){
@@ -382,7 +382,7 @@ ada pada server maka client diminta memilih judul problem lain. Lalu client akan
 Agar dapat mengirim ke server, salah satu cara yang dapat dilakukan adalah dengan membuka isi file pada sisi client lalu menyimpan isi file pada buffer dan mengirim
 ke server. Selanjutnya server akan menyimpan isi buffer pada directory judul problem sesuai ketentuan. Selain itu server juga akan mengupdate file `.tsv` dengan format
 `<judul>\t<author>`
-## 1D.
+## 2D.
 ### Server-side
 ```c
 if(strcmp(cmd,"see")==0){
@@ -417,7 +417,7 @@ Client juga dapat melakukan perintah `see` yang menampilkan isi dari file `.tsv`
 mengganti delimiter `\t` dengan ` by ` lalu mengirim isinya ke client. Dalam hal ini agar terlihat rapi maka tampilan pada client akan memiliki format:
 `Server: .tsv list` diikuti baris berikutnya yaitu `<judul> by <author>`. Jika file `.tsv` kosong maka server juga akan mengirim pesan yang menunjukkan bahwa file
 `.tsv` masih kosong.
-## 1E.
+## 2E.
 ### Server-side
 ```c
 if(strlen(cmd)>=8 && cmd[0]=='d' && cmd[1]=='o' && cmd[2]=='w' && cmd[3]=='n' && cmd[4]=='l' && cmd[5]=='o' && cmd[6]=='a' && cmd[7]=='d'){
@@ -522,7 +522,7 @@ void downloadSoal(){
 Selanjutnya, terdapat fitur `download`. Fitur ini terdiri dari 2 kata yaitu download dan <nama problem>. Untuk membuat fitur ini maka Server akan mengirim path
 dari directory nama problem yang diinginkan, lalu dari client akan mengambil isi `input.txt` dan `description.txt` dari problem tersebut dan membuat directory
 dengan nama yang sama pada client-side.
-## 1F.
+## 2F.
 ### Server-side
 ```c
 else if(strlen(cmd)>=6 && cmd[0]=='s' && cmd[1]=='u' && cmd[2]=='b' && cmd[3]=='m' && cmd[4]=='i' && cmd[5]=='t'){
@@ -596,7 +596,7 @@ void verdict(){
 Terdapat juga fitur `submit` yang terdiri dari 3 kata submit, <nama problem>, dan path hasil output client. Cara menyelesaikan poin ini adalah dengan server
 menerima nama problem dan path dari hasil output client, lalu membandingkan hasil output tersebut dengan `output.txt` pada nama problem yang tersimpan pada server-side
 yang berfungsi seperti kunci jawaban. Jika hasil berbeda maka server akan mengembalikan pesan `WA` dan ketika sama maka server akan mengembalikan pesan `AC`.
-## 1G.
+## 2G.
 ### Server-side
 ```c
 void *client(void *tmp){
