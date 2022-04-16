@@ -3,10 +3,10 @@
 2. Florentino Benedictus (5025201222)
 3. Anak Agung Yatestha Parwata (5025201234)
 
-# SOal No. 1  
+## Soal No. 1  
 Novak adalah seorang mahasiswa biasa yang terlalu sering berselancar di internet. Pada suatu saat, Ia menemukan sebuah informasi bahwa ada suatu situs yang tidak memiliki pengguna. Ia mendownload berbagai informasi yang ada dari situs tersebut dan menemukan sebuah file dengan tulisan yang tidak jelas. Setelah diperhatikan lagi, kode tersebut berformat base64. Ia lalu meminta kepada anda untuk membuat program untuk memecahkan kode-kode di dalam file yang Ia simpan di drive dengan cara decoding dengan base 64. Agar lebih cepat, Ia sarankan untuk menggunakan thread.  
   
-## A)  
+### A)  
 Download dua file zip dan unzip file zip tersebut di dua folder yang berbeda dengan nama quote untuk file zip quote.zip dan music untuk file zip music.zip. Unzip ini dilakukan dengan bersamaan menggunakan thread.  
 Soal tersebut meminta kita untuk melakukan download .zip yang berapa pada link yang disediakan. Dengan menggunakan `exec` serta argumen `/bin/wget` , kita dapat melakukan download sebuah file dari alamat website yang diberikan. Kita juga perlu membuat folder `music` dan folder `quote` untuk menampung hasil dari zip tersebut.  
 ```c
@@ -83,7 +83,7 @@ void make_dir(char* dir){
 }
 ```  
   
-# B)
+### B)
 Decode semua file .txt yang ada dengan base 64 dan masukkan hasilnya dalam satu file .txt yang baru untuk masing-masing folder (Hasilnya nanti ada dua file .txt) pada saat yang sama dengan menggunakan thread dan dengan nama quote.txt dan music.txt. Masing-masing kalimat dipisahkan dengan newline/enter.  
   
 Kita perlu melakukan deklarasi variable-variable yang diperlukan untuk melakukan decode base64.  
@@ -205,7 +205,7 @@ void *decode(void *file){
 ```  
   
   
-# C)  
+### C)  
 Pindahkan kedua file .txt yang berisi hasil decoding ke folder yang baru bernama hasil.  
   
 Kita dapat melakukan pemindahan file dengan membuka file yang akan dipindah dengan permission `r` serta membuka directory yang akan dituju dengan permission `w`. Setelah itu kita akan menggunakan `while` untuk mengambil semua isi yang hendak dipindah hingga terjadi `EOF`.  
@@ -229,7 +229,7 @@ move_file("hasil/quote.txt", "quote.txt");
 ```  
   
   
-# D)  
+### D)  
 Folder hasil di-zip menjadi file hasil.zip dengan password 'mihinomenest[Nama user]'. (contoh password : mihinomenestnovak)  
   
 ```c
@@ -258,7 +258,7 @@ zip_file("hasil");
 ```  
   
   
-# E)  
+### E)  
 Karena ada yang kurang, kalian diminta untuk unzip file hasil.zip dan buat file no.txt dengan tulisan 'No' pada saat yang bersamaan, lalu zip kedua file hasil dan file no.txt menjadi hasil.zip, dengan password yang sama seperti sebelumnya.  
   
 ```c
