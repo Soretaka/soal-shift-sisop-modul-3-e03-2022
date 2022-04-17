@@ -1025,6 +1025,41 @@ Untuk menyelesaikan poin ini, perlu menggunakan thread sehingga tiap client akan
 jumlah client yang terhubung. Hal ini bertujuan agar ketika jumlah client lebih dari 1, maka client yang lain akan terjebak dalam loop sampai client pertama melakukan
 logout, logout dalam hal ini juga akan otomatis mengurangi nilai `ctrClient`. Nilai `new_socket` pada server akan berbeda untuk tiap client, tujuannya agar pesan tidak tercampur.<br>
 
+### Dokumentasi
+#### Register User
+![Register User](https://snipboard.io/Blfrmk.jpg)
+#### See Sebelum dan Setelah Add Problem
+![See Sebelum dan Setelah Add Problem](https://snipboard.io/wEyS7g.jpg)<br>
+*cobasoal adalah directory yang sudah dibuat sebelum server dijalankan untuk mencoba syarat judul problem unique
+#### Hasil Command Add Pada Server
+![Hasil Command Add Pada Server](https://snipboard.io/C7vfxw.jpg)
+#### Command Download
+![Command Download](https://snipboard.io/SaewLq.jpg)
+#### Hasil Download Pada Client
+![Hasil Download Pada Client](https://snipboard.io/MtZyOE.jpg)
+#### Hasil Submit
+![Hasil Submit](https://snipboard.io/bf9yVr.jpg)
+#### Logout dan Client Lain
+![Logout](https://snipboard.io/s2ETRK.jpg)<br>
+![Client Lain](https://snipboard.io/cynpWd.jpg)
+#### Isi users txt dan tsv
+![Txt](https://snipboard.io/fJ8MUh.jpg)<br>
+![Tsv](https://snipboard.io/F4BLgn.jpg)
+#### Isi Soal
+##### description.txt
+![desc](https://snipboard.io/fJ8MUh.jpg)
+##### input.txt
+![in](https://snipboard.io/dZzlxk.jpg)
+##### output.txt (kunci jawaban server-side)
+![out](https://snipboard.io/0w2xQN.jpg)
+##### outputbenar.txt (client-side)
+![outac](https://snipboard.io/djYVbz.jpg)
+##### outputsalah.txt (client-side)
+![outwa](https://snipboard.io/TU7q4G.jpg)
+
+### Kendala
+Tidak ada.
+
 ## Soal No. 3
 ### Nami adalah seorang pengoleksi harta karun handal. Karena Nami memiliki waktu luang, Nami pun mencoba merapikan harta karun yang dimilikinya berdasarkan jenis/tipe/kategori/ekstensi harta karunnya. 
 
