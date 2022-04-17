@@ -1327,3 +1327,20 @@ int main(){
 }
 ```
 Ketika server sudah terkoneksi dengan client, maka server akan menunggu file yang akan dikirim dari client
+
+
+sebelum client dijalankan:
+![Screenshot_from_2022-04-17_17-43-03](/uploads/6a7dd72d06cbabdf26c5c68bba28bc94/Screenshot_from_2022-04-17_17-43-03.png)
+
+setelah client dijalankan:
+![Screenshot_from_2022-04-17_17-40-47](/uploads/31fa2caf37520563ec9571f86e44a869/Screenshot_from_2022-04-17_17-40-47.png)
+
+setelah client diberikan command "send hartakarun.zip":
+![Screenshot_from_2022-04-17_17-40-58](/uploads/9590c2eb2b99f5b1a0bf3622ccfeb695/Screenshot_from_2022-04-17_17-40-58.png)
+
+setelah server menerima file:
+![Screenshot_from_2022-04-17_17-41-05](/uploads/d0dd35027ad16ae16099642f4d7b6af0/Screenshot_from_2022-04-17_17-41-05.png)
+
+![Screenshot_from_2022-04-17_17-41-12](/uploads/499eacd8aba22f64ea2c94ea262cd21e/Screenshot_from_2022-04-17_17-41-12.png)
+
+![Screenshot_from_2022-04-17_17-41-16](/uploads/959f08406404e4606b4aa496da71f183/Screenshot_from_2022-04-17_17-41-16.png)
