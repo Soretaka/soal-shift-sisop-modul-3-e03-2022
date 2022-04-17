@@ -1157,4 +1157,173 @@ int main(int argc, char * argv[]){
 }
 ```
 Diatas merupakan program yang dapat dijalankan untuk mengkategorikan file. pertama - tama, kita membuat sebuah directory dummy untuk menyimpan hasil pengkategorian, lalu file directory dummy tersebut akan direname dan menggantikan directory "hartakarun" ketika proses pengkategorian selesai. 
-lalu kita buka directory hartakarun, dan iterasi semua file yang ada pada directory dan memanggil fungsi kategoriin.
+lalu kita buka directory hartakarun, dan iterasi semua file yang ada pada directory dan memanggil fungsi kategoriin. Pada fungsi kategoriin,akan membuat sebuah thread untuk mengkategorikan file.
+
+sebelum program soal3.c dijalankan:
+![Screenshot_from_2022-04-17_17-31-22](/uploads/9b4191fca0cfc01d51f11738b07f2839/Screenshot_from_2022-04-17_17-31-22.png)
+
+sesudah program soal3.c dijalankan:
+![Screenshot_from_2022-04-17_17-38-11](/uploads/6ba1b85fae9f2a7a4afc8fadb2acfb17/Screenshot_from_2022-04-17_17-38-11.png)
+
+**d dan e)Untuk mengirimkan file ke Cocoyasi Village, nami menggunakan program client-server. Saat program client dijalankan, maka folder /home/[user]/shift3/hartakarun/” akan di-zip terlebih dahulu dengan nama “hartakarun.zip” ke working directory dari program client. dan akan mengirim file ke server ketika command "send hartakarun.zip" dimasukkan**
+### client-side 
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <unistd.h>
+#include <string.h>
+#include <arpa/inet.h>
+#include <sys/wait.h>
+#define SIZE 1024
+ 
+ void zipfile(){
+    int status;
+    if(fork()==0){
+        char *argv[]={"zip","-rm","hartakarun.zip","hartakarun",NULL};
+        execv("/bin/zip",argv);
+    }else while(wait(&status)>0);
+}
+
+void send_file(FILE *fp, int sockfd){
+  int n;
+  char data[SIZE] = {0};
+  bzero(data,SIZE);
+  int size_file=0;
+  while((size_file = fread(data,sizeof(char),SIZE,fp))>0) {
+    if (send(sockfd, data, sizeof(data), 0) == -1) {
+      perror("[-]Error in sending file.");
+      exit(1);
+    }
+    bzero(data, SIZE);
+  }
+}
+ 
+int main(){
+    zipfile();
+  char *ip = "127.0.0.1";
+  int port = 8080;
+  int e;
+ int valread;
+  int sockfd;
+  struct sockaddr_in server_addr;
+  FILE *fp;
+  char *filename = "hartakarun.zip";
+ 
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if(sockfd < 0) {
+    perror("[-]Error in socket");
+    exit(1);
+  }
+  printf("[+]Server socket created successfully.\n");
+ 
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = port;
+  server_addr.sin_addr.s_addr = inet_addr(ip);
+  char buffer[1024]={0};
+  e = connect(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+  if(e == -1) {
+    perror("[-]Error in socket");
+    exit(1);
+  }
+ printf("[+]Connected to Server.\n");
+ char choice[1024];
+ int jalan=1;
+ while(jalan){
+    // getchar();
+   bzero(choice, 1024);
+		scanf(" %[^\n]s", choice);
+    printf("%s\n",choice);
+    write(sockfd, choice, strlen(choice));
+  if(!(strcmp(choice,"send hartakarun.zip"))){
+  fp = fopen(filename, "r");
+  if (fp == NULL) {
+    perror("[-]Error in reading file.");
+    exit(1);
+  }
+ 
+  send_file(fp, sockfd);
+  printf("[+]File data sent successfully.\n");
+  jalan=0;
+  }else{
+    printf("hah\n");
+  }
+  printf("[+]Closing the connection.\n");
+  close(sockfd);
+ }
+  return 0;
+}
+```
+saat client dibuka, client akan langsung menjalankan fungsi zip untuk zip file yang ada, lalu connect dengan server, setelah client berhasil terkoneksi dengan server
+client akan meminta masukan input, jika inputannya bukan "send hartakarun.zip" maka program akan berhenti, jika inputannya "send hartakarun.zip" maka client akan mengirim file hartakarun.zip ke server
+
+### server-side
+```c
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <arpa/inet.h>
+#define SIZE 1024
+#define PORT 8080
+void write_file(int sockfd){
+  int n;
+  FILE *fp;
+  char *filename = "./hartakarun.zip";
+  char buffer[SIZE];
+ 
+  fp = fopen(filename, "wb");
+  while (1) {
+    n = recv(sockfd, buffer, SIZE, 0);
+    if (n <= 0){
+      break;
+      return;
+    }
+    int size_write=fwrite(buffer,sizeof(char),n,fp);
+    bzero(buffer, SIZE);
+  }
+  return;
+}
+ 
+int main(){
+  char *ip = "127.0.0.1";
+  int port = 8080;
+  int e;
+ 
+  int sockfd, new_sock;
+  struct sockaddr_in server_addr, new_addr;
+  socklen_t addr_size;
+  char buffer[SIZE];
+ 
+  sockfd = socket(AF_INET, SOCK_STREAM, 0);
+  if(sockfd < 0) {
+    perror("[-]Error in socket");
+    exit(1);
+  }
+  printf("[+]Server socket created successfully.\n");
+ 
+  server_addr.sin_family = AF_INET;
+  server_addr.sin_port = port;
+  server_addr.sin_addr.s_addr = inet_addr(ip);
+ 
+  e = bind(sockfd, (struct sockaddr*)&server_addr, sizeof(server_addr));
+  if(e < 0) {
+    perror("[-]Error in bind");
+    exit(1);
+  }
+  printf("[+]Binding successfull.\n");
+ 
+  if(listen(sockfd, 10) == 0){
+ printf("[+]Listening....\n");
+ }else{
+ perror("[-]Error in listening");
+    exit(1);
+ }
+ 
+  addr_size = sizeof(new_addr);
+  new_sock = accept(sockfd, (struct sockaddr*)&new_addr, &addr_size);
+  write_file(new_sock);
+  printf("[+]Data written in the file successfully.\n");
+ 
+  return 0;
+}
+```
+Ketika server sudah terkoneksi dengan client, maka server akan menunggu file yang akan dikirim dari client
